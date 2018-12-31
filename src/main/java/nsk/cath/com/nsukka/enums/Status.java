@@ -9,7 +9,7 @@ public enum  Status {
     PRO_APPROVED("PRO approved"), //first stage of announcement when posted by the PRO
     FIN_SEC_APPROVED("Fin Sec approved"), //first stage of financial report when posted by the financial secretary
     TREASURER_APPROVED("Treasurer approved"),//Last stage of financial report when approved by the Treasurer
-    PRESIDENT_APPROVED("Presodent approved");//Last stage of Announcement or Minutes when approved by the President
+    PRESIDENT_APPROVED("Presodent approved");//Last stage of Announcement or MinutesRepo when approved by the President
 
     String value;
     Status (String value)
