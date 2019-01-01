@@ -40,8 +40,8 @@ public class Comment extends SuperModel implements Serializable {
     private Long Id;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="articleId",nullable=false,foreignKey = @ForeignKey(name="FK_Comment_Article"))  
-    private Article articleId;
+    @JoinColumn(name ="id",nullable=false,foreignKey = @ForeignKey(name="FK_Comment_Article"))
+    private Article article;
     
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "user_Id", nullable=false,foreignKey = @ForeignKey(name="FK_Comment_Users"))
@@ -52,7 +52,7 @@ public class Comment extends SuperModel implements Serializable {
 
 
     public Comment(Article article, User userId, String comment) {
-        this.articleId = article;
+        this.article = article;
         this.userId = userId;
         this.comment = comment;
     }

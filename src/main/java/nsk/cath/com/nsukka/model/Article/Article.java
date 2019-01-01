@@ -17,7 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import nsk.cath.com.nsukka.model.SuperModel;
 import nsk.cath.com.nsukka.model.User;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,55 +28,42 @@ import org.hibernate.annotations.UpdateTimestamp;
  *
  * @author LEOGOLD
  */
-
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table (name = "Article")
-public class Article implements Serializable {
+@Table (name = "ArticleRepo")
+public class Article extends SuperModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false,unique = true)
-    private Long articleId ;
-    
-    @Column(nullable = false)
+    private Long id;
+
     private String title;
-    
-    @Column(nullable = false)
+
     private String content;
     
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,targetEntity = User.class)
-    @JoinColumn( nullable=false,foreignKey = @ForeignKey(name="FK_Articles_Users"))
-    private User username;
+    @JoinColumn(foreignKey = @ForeignKey(name="FK_Articles_Users"))
+    private User postedBy;
     
     @OneToMany(targetEntity=Comment.class,
-            mappedBy="articleId", cascade=CascadeType.ALL,
+            mappedBy="id", cascade=CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Comment> commentId;
-    
-    @CreationTimestamp 
-    @Column 
-    private Date created;
-     
-    @UpdateTimestamp 
-    @Column 
-    private Date updated;
-    
-    @Column
-    private String logo;
 
-    public Article(String title, String content, User username) {
+    public Article(String title, String content, User postedBy) {
         this.title = title;
         this.content = content;
-        this.username = username;
+        this.postedBy = postedBy;
     }
  
 
-    public Article(String movieTitle, String movieDes) {
-        this.title = movieTitle;
+    public Article(String title, String movieDes) {
+        this.title = title;
         this.content = movieDes; 
     }
 
