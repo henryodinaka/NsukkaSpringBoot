@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Privilege", schema = Constants.SCHEMA_NAME, uniqueConstraints = @UniqueConstraint(columnNames = {"name","module"}))
+@Table(name = "Privilege", schema = Constants.SCHEMA_NAME)
 public class Privilege extends SuperModel implements Serializable {
 
     @Column(name = "Id")

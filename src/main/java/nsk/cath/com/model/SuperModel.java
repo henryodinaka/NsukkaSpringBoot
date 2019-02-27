@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
-@Data
+//@Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 //@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
@@ -82,4 +82,19 @@ public class SuperModel implements Serializable {
         System.out.println(returnSmall(new int[]{10,3, 60, 4, 1,9, 2,3,6}, 8));
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

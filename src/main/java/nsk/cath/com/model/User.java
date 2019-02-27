@@ -10,12 +10,13 @@ import nsk.cath.com.enums.Gender;
 import nsk.cath.com.enums.Status;
 import nsk.cath.com.enums.Title;
 import nsk.cath.com.model.auth.Role;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
-@ToString
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,7 +26,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(name = "Id")
     private Long id;
 
     @Column
@@ -38,7 +39,7 @@ public class User {
     @Embedded
     private Name name;
 
-    @NotBlank(message = "Email can not be blank")
+    @NotNull
     @Column
     private String email;
 
@@ -47,17 +48,15 @@ public class User {
 
     @Temporal(TemporalType.DATE)
     @Column
-    private Data dateOfBirth;
+    private Date dateOfBirth;
 
     @Column
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "UserRole",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToOne(fetch = FetchType.LAZY)
     private Role roles ;
+
     @Column
     private String picture;
 

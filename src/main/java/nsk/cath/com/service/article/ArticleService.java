@@ -1,60 +1,61 @@
 package nsk.cath.com.service.article;
 
-import nsk.cath.com.model.Article.Article;
-import nsk.cath.com.model.Article.Comment;
-import nsk.cath.com.model.Article.Likes;
+import nsk.cath.com.model.art.Article;
+import nsk.cath.com.model.art.Comment;
 import nsk.cath.com.repo.article.ArticleRepo;
-import nsk.cath.com.repo.article.CommentRepo;
-import nsk.cath.com.repo.article.LikesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class ArticleService {
     private ArticleRepo articleRepo;
-    private CommentRepo commentRepo;
-    private LikesRepo likesRepo;
+    private CommentService commentService;
+//    private LikesRepo likesRepo;
 
-    @Autowired
-    public void setCommentRepo(CommentRepo commentRepo) {
-        this.commentRepo = commentRepo;
+    public void setCommentService(CommentService commentService) {
+        this.commentService = commentService;
     }
 
-    @Autowired
-    public void setLikesRepo(LikesRepo likesRepo) {
-        this.likesRepo = likesRepo;
-    }
+
+//    @Autowired
+//    public void setLikesRepo(LikesRepo likesRepo) {
+//        this.likesRepo = likesRepo;
+//    }
 
     @Autowired
     public void setArticleRepo(ArticleRepo articleRepo) {
         this.articleRepo = articleRepo;
     }
-    public Page<Article> getAllByTitle(String title)
+    public Page<Article> getAllByTitle(String title,Pageable pageable)
     {
-        return articleRepo.getAllByTitle(title);
+        return articleRepo.getAllByTitle(title,pageable);
     }
-    public Page<Article> getAllByUser(Long userId)
+    public Page<Article> getAllByUser(Long userId,Pageable pageable)
     {
-        return articleRepo.getAllByUser(userId);
+        return articleRepo.getAllByUser(userId,pageable);
     }
     public Article findById(Long id)
     {
         return articleRepo.findByArticleId(id);
     }
-    public Page<Article> getAllByDate(Date createdAt)
+    public Page<Article> getAllByDate(Date createdAt,Pageable pageable)
     {
-        return articleRepo.getAllByDate(createdAt);
+        return articleRepo.getAllByDate(createdAt,pageable);
     }
-    public List<Likes> getLikes(Long articleId ,boolean liked)
+    public Long getLikes(Article article)
     {
-        return likesRepo.getLikes(articleId,liked);
+        return article.getLike();
     }
-    public Page<Comment> getAllByArticle(Long articleId)
+    public Long getDisLikes(Article article)
     {
-        return commentRepo.getAllByArticle(articleId);
+        return article.getDislike();
+    }
+    public Page<Comment> getAllByArticle(Long articleId, Pageable pageable)
+    {
+        return commentService.getAllByArticle(articleId,pageable);
     }
 }

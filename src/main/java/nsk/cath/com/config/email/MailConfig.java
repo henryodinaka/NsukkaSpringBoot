@@ -1,9 +1,9 @@
 package nsk.cath.com.config.email;
 
-import javax.mail.Session;
+//import javax.mail.Session;
 
 public interface MailConfig {
 
-	public Session getSession();
+//	public Session getSession();
 	
 }

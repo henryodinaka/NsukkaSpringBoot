@@ -22,20 +22,20 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Query("select u from User u where u.status = :status")
     Page<User> getAllUsersByStatus(@Param("status")Status status, Pageable pageable);
 
-    @Query("select u from User u where u.emailAddress = :emailAddress")
-    User findUserByEmailAddress(@Param("emailAddress") String emailAddress);
+    @Query("select u from User u where u.email = :email")
+    User findUserByEmailAddress(@Param("email") String email);
 
     @Query(" select count(u.id) from User u where u.phoneNumber = :phoneNumber")
     User findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
-    @Query("select u from User u where u.emailAddress = :emailAddress and u.id <> :id")
-    User findUserByEmailAddressAndNotId(@Param("emailAddress") String emailAddress, @Param("id") Long id);
+    @Query("select u from User u where u.email = :email and u.id <> :id")
+    User findUserByEmailAddressAndNotId(@Param("email") String email, @Param("id") Long id);
 
-    @Query(" select count(u.id) from User u where u.emailAddress = :emailAddress")
-    long countByEmailAddress(@Param("emailAddress") String emailAddress);
+    @Query(" select count(u.id) from User u where u.email = :email")
+    long countByEmailAddress(@Param("email") String email);
 
-    @Query(" select count(u.id) from User u where u.emailAddress = :emailAddress and u.id <> :id")
-    long countByEmailAddressAndNotId(@Param("emailAddress") String emailAddress, @Param("id") Long id);
+    @Query(" select count(u.id) from User u where u.email = :email and u.id <> :id")
+    long countByEmailAddressAndNotId(@Param("email") String email, @Param("id") Long id);
 
     @Query(" select count(u.id) from User u where u.phoneNumber = :phoneNumber")
     long countByPhoneNum(@Param("phoneNumber") String phoneNumber);
@@ -43,6 +43,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Query(" select count(u.id) from User u where u.phoneNumber = :phoneNumber and u.id <> :id")
     long countByPhoneNumAndNotId(@Param("phoneNumber") String phoneNumber, @Param("id") Long id);
 
-    @Query("select upper(u.emailAddress) from User u")
+    @Query("select upper(u.email) from User u")
     List<String> getAllEmailAddress();
 }

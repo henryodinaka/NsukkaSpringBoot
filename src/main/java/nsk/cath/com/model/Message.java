@@ -20,7 +20,7 @@ import org.hibernate.annotations.CreationTimestamp;
  * @author LEOGOLD
  */
 @Entity
-@Table
+@Table(name = "Messages")
 public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;

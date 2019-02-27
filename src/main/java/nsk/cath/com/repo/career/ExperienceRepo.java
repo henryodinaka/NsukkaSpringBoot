@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 @Repository
 public interface ExperienceRepo extends JpaRepository<Experience,Long>{
-    @Query("select e from ExperienceRepo e where e.user.id =:userId")
+    @Query("select e from Experience e where e.user.id =:userId")
     List<Experience> findByUser(@Param("userId") Long userId);
 
     @Query("select e from Experience e where e.jobTitle =:jobTitle")

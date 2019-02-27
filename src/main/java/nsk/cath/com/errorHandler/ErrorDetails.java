@@ -5,9 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ng.upperlink.nibss.cmms.enums.Constants;
-import ng.upperlink.nibss.cmms.util.JsonDateSerializer;
-import ng.upperlink.nibss.cmms.view.View;
+import nsk.cath.com.enums.Constants;
+import nsk.cath.com.utils.JsonDateSerializer;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
@@ -19,14 +18,14 @@ import java.util.List;
 @AllArgsConstructor
 public class ErrorDetails {
 
-  @JsonView(View.ThirdParty.class)
+//  @JsonView(View.ThirdParty.class)
   @JsonSerialize(using = JsonDateSerializer.class)
   private Date timestamp;
 
-  @JsonView(View.ThirdParty.class)
+//  @JsonView(View.ThirdParty.class)
   private String message;
 
-  @JsonView(View.ThirdParty.class)
+//  @JsonView(View.ThirdParty.class)
   private List<String> errors;
 
   public ErrorDetails(Date timestamp, String message, String error) {

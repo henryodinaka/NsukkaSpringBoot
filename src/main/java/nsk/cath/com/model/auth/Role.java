@@ -2,6 +2,7 @@ package nsk.cath.com.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,10 @@ public class Role extends SuperModel implements Serializable{
     @Column(name = "Description")
     @JsonProperty("description")
     private String description;
+
+    @Column(name = "Activated")
+    @JsonProperty("activated")
+    private boolean activated = true;
 
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

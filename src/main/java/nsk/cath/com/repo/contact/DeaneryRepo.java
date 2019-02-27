@@ -14,16 +14,16 @@ import java.util.List;
 @Transactional
 @Repository
 public interface DeaneryRepo extends JpaRepository<Deanery,Long> {
-    @Query("select d from Deanery c where c.name =:name")
-    Deanery findByName(@Param("name") String name);
-
-    @Query("select d from Deanery d where d.deaneryCode =:deaneryCode")
-    Deanery findByDeaneryCode(@Param("deaneryCode") String deaneryCode);
-
-    @Query("select d from Deanery d where d.deaneryCode =:diocese")
-    Page<Deanery> findAllByDiocese(@Param("diocese") Long diocese, Pageable pageable);
-
-    @Query("select d from Deanery d where d.deaneryCode =:diocese")
-    List<Deanery> findAllByDiocese(@Param("diocese") Long diocese);
+//    @Query("select d from Deanery c where c.name =:name")
+//    Deanery findByName(@Param("name") String name);
+//
+//    @Query("select d from Deanery d where d.deaneryCode =:deaneryCode")
+//    Deanery findByDeaneryCode(@Param("deaneryCode") String deaneryCode);
+//
+//    @Query("select d from Deanery d where d.deaneryCode =:diocese")
+//    Page<Deanery> findAllByDiocese(@Param("diocese") Long diocese, Pageable pageable);
+//
+//    @Query("select d from Deanery d where d.deaneryCode =:diocese")
+//    List<Deanery> findAllByDiocese(@Param("diocese") Long diocese);
 
 }

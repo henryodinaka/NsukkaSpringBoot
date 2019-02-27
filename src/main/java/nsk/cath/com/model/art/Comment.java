@@ -1,24 +1,15 @@
-package nsk.cath.com.model.Article;
-
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+package nsk.cath.com.model.art;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import nsk.cath.com.model.Article.Article;
+import nsk.cath.com.enums.Constants;
 import nsk.cath.com.model.SuperModel;
 import nsk.cath.com.model.User;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  *
@@ -28,7 +19,7 @@ import nsk.cath.com.model.User;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table (name = "Comment")
+@Table (schema = Constants.SCHEMA_NAME)
 @ToString
 public class Comment extends SuperModel implements Serializable {
     
@@ -40,16 +31,21 @@ public class Comment extends SuperModel implements Serializable {
     private Long Id;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="id",nullable=false,foreignKey = @ForeignKey(name="FK_Comment_Article"))
+    @JoinColumn(name ="article_id")
     private Article article;
     
     @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_Id", nullable=false,foreignKey = @ForeignKey(name="FK_Comment_Users"))
+    @JoinColumn(name = "user_Id")
     private User userId;
     
     @Column
     private String comment ;
 
+    @Column
+    private Long like;
+
+    @Column
+    private Long dislike;
 
     public Comment(Article article, User userId, String comment) {
         this.article = article;
@@ -57,6 +53,6 @@ public class Comment extends SuperModel implements Serializable {
         this.comment = comment;
     }
 
-     
-   
+
+
 }

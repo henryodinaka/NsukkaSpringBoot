@@ -1,0 +1,82 @@
+2019-02-27 08:52:26 INFO [main] o.a.c.c.C.[.[.[/]
+                [DirectJDKLog.java:173] Initializing Spring embedded WebApplicationContext
+2019-02-27 08:52:26 INFO [main] o.s.w.c.ContextLoader
+                [ServletWebServerApplicationContext.java:285] Root WebApplicationContext: initialization completed in 5059 ms
+2019-02-27 08:52:27 INFO [main] o.s.b.w.s.FilterRegistrationBean
+                [AbstractFilterRegistrationBean.java:248] Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-02-27 08:52:27 INFO [main] o.s.b.w.s.FilterRegistrationBean
+                [AbstractFilterRegistrationBean.java:248] Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-02-27 08:52:27 INFO [main] o.s.b.w.s.FilterRegistrationBean
+                [AbstractFilterRegistrationBean.java:248] Mapping filter: 'formContentFilter' to: [/*]
+2019-02-27 08:52:27 INFO [main] o.s.b.w.s.FilterRegistrationBean
+                [AbstractFilterRegistrationBean.java:248] Mapping filter: 'requestContextFilter' to: [/*]
+2019-02-27 08:52:27 INFO [main] o.s.b.w.s.DelegatingFilterProxyRegistrationBean
+                [AbstractFilterRegistrationBean.java:248] Mapping filter: 'springSecurityFilterChain' to: [/*]
+2019-02-27 08:52:27 INFO [main] o.s.b.w.s.ServletRegistrationBean
+                [ServletRegistrationBean.java:186] Servlet dispatcherServlet mapped to [/]
+2019-02-27 08:52:27 INFO [main] c.z.h.HikariDataSource
+                [HikariDataSource.java:110] HikariPool-1 - Starting...
+2019-02-27 08:52:28 INFO [main] c.z.h.HikariDataSource
+                [HikariDataSource.java:123] HikariPool-1 - Start completed.
+2019-02-27 08:52:28 INFO [main] o.h.j.i.u.LogHelper
+                [LogHelper.java:31] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-02-27 08:52:28 INFO [main] o.h.Version
+                [Version.java:46] HHH000412: Hibernate Core {5.3.7.Final}
+2019-02-27 08:52:28 INFO [main] o.h.c.Environment
+                [Environment.java:213] HHH000206: hibernate.properties not found
+2019-02-27 08:52:29 INFO [main] o.h.a.c.Version
+                [JavaReflectionManager.java:49] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-02-27 08:52:29 INFO [main] o.h.d.Dialect
+                [Dialect.java:157] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2019-02-27 08:52:30 WARN [main] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext
+                [AbstractApplicationContext.java:554] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.AnnotationException: Illegal attempt to map a non collection as a @OneToMany, @ManyToMany or @CollectionOfElements: nsk.cath.com.model.User.roles
+2019-02-27 08:52:30 INFO [main] c.z.h.HikariDataSource
+                [HikariDataSource.java:350] HikariPool-1 - Shutdown initiated...
+2019-02-27 08:52:30 INFO [main] c.z.h.HikariDataSource
+                [HikariDataSource.java:352] HikariPool-1 - Shutdown completed.
+2019-02-27 08:52:30 INFO [main] o.a.c.c.StandardService
+                [DirectJDKLog.java:173] Stopping service [Tomcat]
+2019-02-27 08:52:30 INFO [main] o.s.b.a.l.ConditionEvaluationReportLoggingListener
+                [ConditionEvaluationReportLoggingListener.java:142] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-02-27 08:52:30 ERROR [main] o.s.b.SpringApplication
+                [SpringApplication.java:858] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.AnnotationException: Illegal attempt to map a non collection as a @OneToMany, @ManyToMany or @CollectionOfElements: nsk.cath.com.model.User.roles
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1745)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:576)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1083)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:853)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:546)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248)
+	at nsk.cath.com.NsukkaApplication.main(NsukkaApplication.java:10)
+Caused by: org.hibernate.AnnotationException: Illegal attempt to map a non collection as a @OneToMany, @ManyToMany or @CollectionOfElements: nsk.cath.com.model.User.roles
+	at org.hibernate.cfg.annotations.CollectionBinder.getCollectionBinder(CollectionBinder.java:332)
+	at org.hibernate.cfg.AnnotationBinder.processElementAnnotations(AnnotationBinder.java:1904)
+	at org.hibernate.cfg.AnnotationBinder.processIdPropertiesIfNotAlready(AnnotationBinder.java:972)
+	at org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:799)
+	at org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl.processEntityHierarchies(AnnotationMetadataSourceProcessorImpl.java:250)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess$1.processEntityHierarchies(MetadataBuildingProcess.java:231)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:274)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:904)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:935)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:57)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:377)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1804)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1741)
+	... 16 common frames omitted

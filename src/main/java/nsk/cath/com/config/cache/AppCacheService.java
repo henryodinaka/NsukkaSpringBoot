@@ -18,9 +18,9 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @Repository
 public class AppCacheService {
-    
+
     private static final String KEY = "appCache";
-    
+
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
     private HashOperations hashOperations;
@@ -36,6 +36,6 @@ public class AppCacheService {
     public Object findCacheKey(String key, String value) {
         return hashOperations.get(KEY + key, value);
     }
-    
+
 //    public boolean saveToCache()
 }

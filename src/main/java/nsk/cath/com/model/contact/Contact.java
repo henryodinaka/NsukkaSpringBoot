@@ -28,7 +28,7 @@ public class Contact implements Serializable{
     private String town;
 
     @Column
-    private boolean isHomeAddress;
+    private boolean homeAddress;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

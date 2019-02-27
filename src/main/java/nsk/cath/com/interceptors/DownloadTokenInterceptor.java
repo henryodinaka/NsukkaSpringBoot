@@ -1,13 +1,13 @@
 package nsk.cath.com.interceptors;
 
 import com.google.gson.Gson;
-import ng.upperlink.nibss.cmms.config.cache.JWTRedisToken;
-import ng.upperlink.nibss.cmms.config.cache.SessionManager;
-import ng.upperlink.nibss.cmms.config.cache.UserTokenCacheService;
-import ng.upperlink.nibss.cmms.dto.UserDetail;
-import ng.upperlink.nibss.cmms.enums.Constants;
-import ng.upperlink.nibss.cmms.enums.Errors;
-import ng.upperlink.nibss.cmms.errorHandler.ErrorDetails;
+import nsk.cath.com.config.cache.JWTRedisToken;
+import nsk.cath.com.config.cache.SessionManager;
+import nsk.cath.com.config.cache.UserTokenCacheService;
+import nsk.cath.com.dto.UserDetail;
+import nsk.cath.com.enums.Constants;
+import nsk.cath.com.enums.Errors;
+import nsk.cath.com.errorHandler.ErrorDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
