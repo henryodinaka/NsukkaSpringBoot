@@ -12,5 +12,8 @@ public class ContactRequest {
     private String houseAddress;
     private String town;
     private Long parishId;
+    private Long stateId;
+    private Long lgaId;
+    private Long countryId;
     private boolean isHomeAddress;
 }

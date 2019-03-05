@@ -3,13 +3,13 @@ package nsk.cath.com.enums;
 
 public enum Errors {
 
-    INVALID_DATE_FORMAT("End date cannot be greater than start date!"),
-    INVALID_REQUEST("Invalid request provided."),
+    INVALID_FILE_FORMAT("Invalid File Extension! Allowed extensions are .jpg, .pdf, .png, .jpeg and .zip"),
+    INVALID_FILE_SIZE("File Size Exceeded!"),
     NOT_APPLICABLE("This action cannot be applied to PENDING requests."),
     INVALID_AGENT_MANAGER_INSTITUTION_CODE("Invalid agent manager institution code."),
     UNKNOWN_USER("unknown user."),
     UNKNOWN_DATA("unknown {}."),
-    UNKNOWN_JOBROLE_ID("unknown job roles id."),
+    UNKNOWN_ROLE_ID("unknown user role with role Id {}"),
     UNKNOWN_GRADE_LEVEL_ID("unknown grade level id."),
     EXPIRED_SESSION("Expired Session"),
     EXPIRED_TOKEN("Expired Token"),

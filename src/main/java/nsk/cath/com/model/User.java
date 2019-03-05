@@ -55,7 +55,7 @@ public class User {
     private Gender gender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Role roles ;
+    private Role role;
 
     @Column
     private String picture;

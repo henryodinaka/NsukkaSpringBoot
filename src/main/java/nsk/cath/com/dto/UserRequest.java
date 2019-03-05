@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import nsk.cath.com.enums.Gender;
+import nsk.cath.com.enums.MaritalStatus;
 import nsk.cath.com.enums.Title;
 
 import java.util.Date;
@@ -21,5 +22,6 @@ public class UserRequest {
     private ContactRequest contact;
     private Date dateOfBirth;
     private Long role;
-
+    private MaritalStatus maritalStatus;
+    private String uploadImage;
 }

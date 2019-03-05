@@ -2,6 +2,7 @@ package nsk.cath.com.enums;
 
 public enum  Status {
     ACTIVE("Active"),
+    INACTIVE("Active"),
     SUSPENDEND("Suspended"),
     BLOCKED("Blocked"),
     UNKNOWN("Unknown"),

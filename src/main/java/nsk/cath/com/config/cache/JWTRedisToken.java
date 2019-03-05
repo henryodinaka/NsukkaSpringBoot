@@ -113,7 +113,7 @@ public class JWTRedisToken {
             userDetail.setUserType(userDetailString.get("userType", String.class));
             userDetail.setUserAuthorizationType(userDetailString.get("userAuthorizationType", String.class));
             userDetail.setSessionId(userDetailString.get("sessionId", String.class));
-            userDetail.setRoles(userDetailString.get("roles", ArrayList.class));
+            userDetail.setRoles(userDetailString.get("role", ArrayList.class));
             userDetail.setPrivileges(userDetailString.get("privileges", ArrayList.class));
 
 

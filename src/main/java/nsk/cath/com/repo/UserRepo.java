@@ -29,19 +29,19 @@ public interface UserRepo extends JpaRepository<User, Long> {
     User findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     @Query("select u from User u where u.email = :email and u.id <> :id")
-    User findUserByEmailAddressAndNotId(@Param("email") String email, @Param("id") Long id);
+    User findUserByEmailAddress(@Param("email") String email, @Param("id") Long id);
 
     @Query(" select count(u.id) from User u where u.email = :email")
     long countByEmailAddress(@Param("email") String email);
 
     @Query(" select count(u.id) from User u where u.email = :email and u.id <> :id")
-    long countByEmailAddressAndNotId(@Param("email") String email, @Param("id") Long id);
+    long countByEmailAddress(@Param("email") String email, @Param("id") Long id);
 
     @Query(" select count(u.id) from User u where u.phoneNumber = :phoneNumber")
     long countByPhoneNum(@Param("phoneNumber") String phoneNumber);
 
     @Query(" select count(u.id) from User u where u.phoneNumber = :phoneNumber and u.id <> :id")
-    long countByPhoneNumAndNotId(@Param("phoneNumber") String phoneNumber, @Param("id") Long id);
+    long countByPhoneNum(@Param("phoneNumber") String phoneNumber, @Param("id") Long id);
 
     @Query("select upper(u.email) from User u")
     List<String> getAllEmailAddress();
