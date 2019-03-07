@@ -7,9 +7,12 @@ import nsk.cath.com.enums.Status;
 import nsk.cath.com.errorHandler.NSKException;
 import nsk.cath.com.model.User;
 import nsk.cath.com.model.auth.Role;
+import nsk.cath.com.model.contact.Contact;
+import nsk.cath.com.model.contact.Lga;
 import nsk.cath.com.repo.UserRepo;
 import nsk.cath.com.repo.contact.ContactRepo;
 import nsk.cath.com.service.auth.RoleService;
+import nsk.cath.com.service.contact.LgaService;
 import nsk.cath.com.utils.Validator;
 import nsk.cath.com.utils.encryption.EncyptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -33,15 +36,16 @@ public class UserService {
     private RoleService roleService;
     @Autowired
     private Validator<UserRequest> userRequestValidator;
+    @Autowired
+    private LgaService lgaService;
 
     public User save(User user)
     {
         return userRepo.save(user);
     }
     public ResponseEntity<?> setup(UserRequest request,boolean isNigeria,boolean isUpdate) throws NSKException {
-        userRequestValidator.validateForm(request,isNigeria);
+        userRequestValidator.validateUserRequest(request,isNigeria,isUpdate);
 
-        userRequestValidator.validate(request, isUpdate, request.getId());
         User user = new User();
 
         if (isUpdate) {
@@ -77,7 +81,7 @@ public class UserService {
         if (newUserRole !=null)
             user.setRole(newUserRole);
         else throw new NSKException(Errors.UNKNOWN_ROLE_ID.getValue().replace("{}",String.valueOf(request.getRole())),"404","404");
-       return null;
+       return user;
     }
     public User findById (Long id)
     {
@@ -91,6 +95,10 @@ public class UserService {
     {
         return userRepo.getAllUsersByStatus(status,pageable);
     }
+    public  Page<User> getAllUsersByParish(Long id, Pageable pageable)
+    {
+        return userRepo.getAllUsersByParish(id,pageable);
+    }
     public User findUserByEmailAddress(String emailAddress)
     {
         return userRepo.findUserByEmailAddress(emailAddress);
@@ -102,5 +110,38 @@ public class UserService {
     public List<String> getAllEmailAddress()
     {
         return userRepo.getAllEmailAddress();
+    }
+    public long countUserByParishId(Long parishId) {
+            return userRepo.countByParish(parishId);
+    }
+
+//    public long countUserByDeaneryId(Long deaneryId) {
+//            return userRepo.countByDeanery(deaneryId);
+//    }
+//    public long countUserByDioceseId(Long dioceseId) {
+//            return userRepo.countByDiocese(dioceseId);
+//    }
+//
+//    public Page<User> getAllUsers(Status status,Pageable pageable) {
+//        return userRepo.getAllUsers(pageable);
+//    }
+//
+//
+//    public List<User> getUsersByUserType(Long userType, boolean activated, RoleName roleName) {
+//        return userRepo.getUsersByUserType(roleName, userType, activated);
+//    }
+
+    public Contact getContactDetails(UserRequest userReq) {
+        Contact contact = new Contact();
+        Lga lga = null;
+        if (userReq.getContact().getLgaId() !=null && userReq.getContact().getLgaId() !=0)
+        {
+            lga= this.lgaService.get(userReq.getContact().getLgaId());
+            contact.setLga(Optional.ofNullable(lga).orElse(null));
+        }
+        contact.setHouseAddress(Optional.ofNullable(userReq.getContact().getHouseAddress()).orElse(null));
+        contact.setCity(Optional.ofNullable(userReq.getContact().getCity()).orElse(null));
+        contact.setHomeAddress(userReq.getContact().isHomeAddress());
+        return contact;
     }
 }

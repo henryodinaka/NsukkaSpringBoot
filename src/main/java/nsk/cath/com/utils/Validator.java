@@ -49,7 +49,7 @@ public class Validator<T> {
 //        }
 //        return response;
 //    }
-//    public EmandateResponse validateForm(EmandateRequest request)
+//    public EmandateResponse validateUserRequest(EmandateRequest request)
 //    {
 //
 //        String e1 = formValidation.validateBankInformation(request.getAccountNumber(), request.getBankCode());
@@ -63,8 +63,7 @@ public class Validator<T> {
 //            return new EmandateResponse(EmandateResponseCode.INVALID_REQUEST.getCode(),null,errors.toString());
 //    }
 
-    public ErrorDetails validateForm(T  req, boolean isNigeria)
-    {
+    public ErrorDetails validateUserRequest(T  req, boolean isNigeria, boolean isUpdate) throws NSKException {
         Optional<String> e1 =null;
         Optional<String> e2 =null;
         Optional<String> e3;
@@ -72,9 +71,8 @@ public class Validator<T> {
         if (req instanceof UserRequest)
         {
             UserRequest request  = ((UserRequest) req);
-            e1 = Optional.ofNullable(formValidation.validateDemography(request.getDateOfBirth(),request.getNameRequest().getFirstName(),request.getGender(),request.getNameRequest().getMiddleName(),request.getNameRequest().getLastName(),request.getTitle()));
-            ContactRequest contactRequest = request.getContact();
-            e2 = Optional.ofNullable(formValidation.validateContactDetails(request.getEmail(),contactRequest.getHouseAddress(),isNigeria,contactRequest.getStateId(),contactRequest.getLgaId(),request.getPhoneNumber(),contactRequest.isHomeAddress()));
+            e1 = Optional.ofNullable(formValidation.validateDemography(request.getEmail(),request.getPhoneNumber(),request.getDateOfBirth(),request.getNameRequest().getFirstName(),request.getGender(),request.getNameRequest().getMiddleName(),request.getNameRequest().getLastName(),request.getTitle()));
+            validate(request, isUpdate, request.getId());
         }
 //            e3 = Optional.ofNullable(formValidation.validateRate(request.isFixedAmountMandate(), request.getAmount(), request.getFrequency(),request.getNarration(), request.getProductId()));
 //            e4 = Optional.ofNullable(formValidation.validateRequestCodes(request.getChannelCode(), request.getSubscriberCode(), request.getSubscriberPassCode(), request.isFixedAmountMandate()));
@@ -97,15 +95,25 @@ public class Validator<T> {
         if (e1.isPresent()) {
             errors.add(e1.get());
         }
-        if (e2.isPresent()) {
-            errors.add(e2.get());
-        }
 //        if (e3.isPresent()) {
 //            errors.add(e3.get());
 //        }
 //        if (e4.isPresent()) {
 //            errors.add(e4.get());
 //        }
+        if (errors.isEmpty())
+            return null;
+        else
+            return new ErrorDetails(new Date(),"Validation failed",errors.toString());
+    }
+
+    public ErrorDetails validateContactRequest(ContactRequest contactRequest) {
+        Optional<String> e2;
+        e2 = Optional.ofNullable(formValidation.validateContactDetails(contactRequest));
+        List<String> errors = new ArrayList<>();
+        if (e2.isPresent()) {
+            errors.add(e2.get());
+        }
         if (errors.isEmpty())
             return null;
         else

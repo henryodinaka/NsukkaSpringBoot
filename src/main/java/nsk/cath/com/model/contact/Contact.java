@@ -25,19 +25,19 @@ public class Contact implements Serializable{
     private String houseAddress;
 
     @Column
-    private String town;
+    private String city;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Lga",referencedColumnName = "Id")
+    private Lga lga;
 
     @Column
     private boolean homeAddress;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "useer",referencedColumnName = "Id")
+    @JoinColumn(name = "User",referencedColumnName = "Id")
     private User user;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ParishId", referencedColumnName = "Id")
-    private Parish parish;
 
 }

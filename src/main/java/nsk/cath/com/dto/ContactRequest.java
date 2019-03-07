@@ -10,10 +10,11 @@ import lombok.*;
 public class ContactRequest {
     private Long id;
     private String houseAddress;
-    private String town;
+    private String city;
     private Long parishId;
     private Long stateId;
     private Long lgaId;
     private Long countryId;
     private boolean isHomeAddress;
+    private boolean isNigeria;
 }

@@ -1,6 +1,8 @@
 package nsk.cath.com.repo.contact;
 
 import nsk.cath.com.model.contact.Contact;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +19,8 @@ public interface ContactRepo extends JpaRepository<Contact, Long>{
 
     @Query("select c from Contact c where c.user.id =:userId and c.homeAddress =:homeAddress")
     Contact findByUserAndHomeAddress(@Param("userId") Long userId,@Param("homeAddress") boolean homeAddress);
+
+    Page<Contact> findByCity(String city,Pageable pageable);
+    Page<Contact> findByHomeAddress(boolean isHomeAddress,Pageable pageable);
+    Page<Contact> findByHouseAddress(String houseAddress, Pageable pageable);
 }

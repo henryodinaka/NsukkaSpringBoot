@@ -15,8 +15,8 @@ import java.util.List;
 @Repository
 public interface StateRepo extends JpaRepository<State, Long> {
 
-    @Query("select count(s.id) from State s where s.name = :name and s.country.name =:countryName")
-    int getCountByName(@Param("name") String name,@Param("countryName") String countryName);
+    @Query("select count(s.id) from State s where s.name = :name")
+    int getCountByName(@Param("name") String name);
 
     @Query("select count(s.id) from State s where s.name = :name and s.id <> :id")
     int getCountByNameAndNotId(@Param("name") String name, @Param("id") Long id);

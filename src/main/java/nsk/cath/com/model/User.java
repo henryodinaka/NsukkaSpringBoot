@@ -10,6 +10,7 @@ import nsk.cath.com.enums.Gender;
 import nsk.cath.com.enums.Status;
 import nsk.cath.com.enums.Title;
 import nsk.cath.com.model.auth.Role;
+import nsk.cath.com.model.contact.Parish;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -67,4 +68,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ParishId", referencedColumnName = "Id")
+    private Parish parish;
 }

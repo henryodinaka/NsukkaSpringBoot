@@ -20,6 +20,10 @@ public class CountryService {
         this.countryRepo = countryRepo;
     }
 
+    public Country getOne(Long countryId)
+    {
+        return countryRepo.getOne(countryId);
+    }
     public List<Country> findAllCountries()
     {
         return countryRepo.findAllCountries();

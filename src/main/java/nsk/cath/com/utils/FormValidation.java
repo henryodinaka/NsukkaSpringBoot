@@ -1,5 +1,6 @@
 package nsk.cath.com.utils;
 
+import nsk.cath.com.dto.ContactRequest;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class FormValidation {
 
 
     //validate Demographics here
-    public String validateDemography(Date dateOfBirth, String firstName, Object gender, String middleName,String surname, Object title) {
+    public String validateDemography(String email,String phoneNumber , Date dateOfBirth, String firstName, Object gender, String middleName,String surname, Object title) {
 
         if (!validData(title)) {
             return "title is required";
@@ -41,6 +42,24 @@ public class FormValidation {
             }
         }
 
+
+        if (validData(email)) {
+            if(email.contains(" ")){
+                return "Please ensure you remove all whitespaces in the emailAddress address provided";
+            }
+
+            if (!validEmail(email)){
+                return "Email address is invalid. Please provide a valid emailAddress address";
+            }
+        }
+
+        if (!validData(phoneNumber)) {
+            return "phoneNumber is required";
+        }
+        if (!validPhoneNumber(phoneNumber)) {
+            return "Invalid phoneNumber, Phone number must be between 7 and 15 digit characters";
+        }
+
         if (!validData(dateOfBirth)) {
             return "date of birth is required";
         }
@@ -55,11 +74,10 @@ public class FormValidation {
         return null;
     }
 
-    public String validateContactDetails(String email, String residentialAddress, boolean isNigeria, Long state,
-                                         Long lga, String phoneNumber ,boolean isHomeAddress) {
+    public String validateContactDetails(ContactRequest request) {
         String address;
         String stateOf;
-        if (isHomeAddress)
+        if (request.isHomeAddress())
         {
             address ="home";
             stateOf ="origin";
@@ -69,38 +87,20 @@ public class FormValidation {
             address ="residential";
             stateOf ="residence";
         }
-
-        if (validData(email)) {
-            if(email.contains(" ")){
-                return "Please ensure you remove all whitespaces in the emailAddress address provided";
-            }
-
-            if (!validEmail(email)){
-                return "Email address is invalid. Please provide a valid emailAddress address";
-            }
-        }
-
-        if (!validData(residentialAddress)) {
+        if (!validData(request.getHouseAddress())) {
             return address+" address is required";
         }
-        if (!validLength(residentialAddress, 20, 255)) {
+        if (!validLength(request.getHouseAddress(), 20, 255)) {
             return "Invalid "+address+" Address, "+address+" Address must be between 20 and 255 characters";
         }
 
-        if (isNigeria) {
-            if (!validData(state)) {
+        if (request.isNigeria()) {
+            if (!validData(request.getStateId())) {
                 return "state Of "+stateOf+" is required";
             }
-            if (!validData(lga)) {
+            if (!validData(request.getLgaId())) {
                 return "local government area Of  "+stateOf+"  is required";
             }
-        }
-
-        if (!validData(phoneNumber)) {
-            return "phoneNumber is required";
-        }
-        if (!validPhoneNumber(phoneNumber)) {
-            return "Invalid phoneNumber, Phone number must be between 7 and 15 digit characters";
         }
 
         return null;

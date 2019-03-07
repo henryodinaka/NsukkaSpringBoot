@@ -22,6 +22,9 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Query("select u from User u where u.status = :status")
     Page<User> getAllUsersByStatus(@Param("status")Status status, Pageable pageable);
 
+    @Query("select u from User u where u.parish.id = :parishId")
+    Page<User> getAllUsersByParish(@Param("parishId")Long parishId, Pageable pageable);
+
     @Query("select u from User u where u.email = :email")
     User findUserByEmailAddress(@Param("email") String email);
 
@@ -42,6 +45,9 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     @Query(" select count(u.id) from User u where u.phoneNumber = :phoneNumber and u.id <> :id")
     long countByPhoneNum(@Param("phoneNumber") String phoneNumber, @Param("id") Long id);
+
+    @Query(" select count(u.id) from User u where u.parish.id = :parishId")
+    long countByParish(@Param("parishId") Long parishId);
 
     @Query("select upper(u.email) from User u")
     List<String> getAllEmailAddress();
