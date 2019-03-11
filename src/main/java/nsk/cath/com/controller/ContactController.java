@@ -11,9 +11,7 @@ import nsk.cath.com.service.contact.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.ws.rs.*;
@@ -21,13 +19,14 @@ import javax.ws.rs.core.MediaType;
 import java.util.Arrays;
 
 @Slf4j
-@Path("/contact")
+@RestController
+@RequestMapping("/contact")
 @Consumes(value = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 @Produces(value = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 public class ContactController {
     @Autowired
     ContactService contactService;
-    @POST
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody ContactRequest contactRequest,
                                     @ApiIgnore @RequestAttribute(Constants.USER_DETAIL)UserDetail userDetail)
     {
@@ -39,7 +38,7 @@ public class ContactController {
         }
         return ResponseEntity.status(200).body("");
     }
-    @PUT
+    @PutMapping
     public ResponseEntity<?> update(@RequestBody ContactRequest userRequest,
                                     @ApiIgnore @RequestAttribute(Constants.USER_DETAIL)UserDetail userDetail)
     {
@@ -51,22 +50,22 @@ public class ContactController {
         }
         return ResponseEntity.status(200).body("");
     }
-    @GET
+    @GetMapping
     public ResponseEntity<?> findByUser(@RequestParam Long userId)
     {
         return ResponseEntity.ok(contactService.findByUser(userId));
     }
-    @GET
+    @GetMapping("/city")
     public ResponseEntity<?> findByCity(@RequestParam String city,@RequestParam int pageNum,@RequestParam int pageSize)
     {
         return ResponseEntity.ok(contactService.findByCity(city,new PageRequest(pageNum,pageSize)));
     }
-    @GET
+    @GetMapping("/address")
     public ResponseEntity<?> findByHomeAddress(@RequestParam boolean isHome,@RequestParam int pageNum,@RequestParam int pageSize)
     {
         return ResponseEntity.ok(contactService.findByHomeAddress(isHome,new PageRequest(pageNum,pageSize)));
     }
-    @GET
+    @GetMapping("/house")
     public ResponseEntity<?> findByHouseAddress(@RequestParam String houseAddress,@RequestParam int pageNum,@RequestParam int pageSize)
     {
         return ResponseEntity.ok(contactService.findByHouseAddress(houseAddress,new PageRequest(pageNum,pageSize)));

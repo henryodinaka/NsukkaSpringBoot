@@ -1,0 +1,17 @@
+package nsk.cath.com.enums;
+
+public enum Actions {
+    CREATE_USER,
+    ACCEPT_USER_CREATION,
+    VIEW_MEMBER_DETAILS,
+    SUSPEND_USER,
+    ASSIGN_USER_ROLE,
+    POST_ARTICLE,
+    APPROVE_ARTICLE,
+    REMOVE_ARTICLE,
+    POST_MINUTES,
+    APRROVE_MINUTES,
+    POST_ACCOUNT,
+    APPROVE_ACCOUNT,
+
+}

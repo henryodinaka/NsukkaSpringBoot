@@ -30,4 +30,9 @@ public class Deanery{
     @JoinColumn(name = "DioceseId", referencedColumnName = "Id")
     private Diocese diocese;
 
+    public Deanery(Long id,String name, String deaneryCode) {
+        this.id =id;
+        this.name = name;
+        this.deaneryCode = deaneryCode;
+    }
 }

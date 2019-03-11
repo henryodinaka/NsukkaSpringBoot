@@ -3,6 +3,8 @@ package nsk.cath.com.enums;
 public enum  Status {
     ACTIVE("Active"),
     INACTIVE("Active"),
+    UNAUTHORIZED_CREATE("Unauthorized create"),
+    UNAPPROVED_POST("Unapproved post"),
     SUSPENDEND("Suspended"),
     BLOCKED("Blocked"),
     UNKNOWN("Unknown"),

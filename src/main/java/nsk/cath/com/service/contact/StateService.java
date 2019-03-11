@@ -54,7 +54,7 @@ public class StateService {
         return stateRepo.getCountByNameAndNotId(name, id);
     }
 
-    public String validate(StateRequest request, boolean isUpdate, Long id){
+    private String validate(StateRequest request, boolean isUpdate, Long id){
 
         int count = 0;
         if (isUpdate){
@@ -74,7 +74,7 @@ public class StateService {
         return null;
     }
 
-    public State generate(State state, StateRequest request){
+    private State generate(State state, StateRequest request){
         state.setName(request.getName());
         state.setCountry(countryService.getOne(request.getId()));
         return state;

@@ -21,8 +21,8 @@ public interface ParishRepo extends JpaRepository<Parish,Long>{
     Parish findById(@Param("id")String id);
 
     @Query("select p from Parish p where p.deanery.id =:deaneryId")
-    Page<Parish> findAllByDeanery(@Param("deaneryId")String deaneryId, Pageable pageable);
+    Page<Parish> findAllByDeanery(@Param("deaneryId")Long deaneryId, Pageable pageable);
 
     @Query("select d from Parish d where d.deanery.id =:deaneryId")
-    List<Parish> findAllByDeanery(@Param("deaneryId")String deaneryId);
+    List<Parish> findAllByDeanery(@Param("deaneryId")Long deaneryId);
 }

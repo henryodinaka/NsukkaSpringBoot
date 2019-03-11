@@ -1,8 +1,11 @@
 package nsk.cath.com.service;
 
+import nsk.cath.com.dto.AssignRoleRequest;
+import nsk.cath.com.dto.UserDetail;
 import nsk.cath.com.dto.UserRequest;
 import nsk.cath.com.embaddable.Name;
 import nsk.cath.com.enums.Errors;
+import nsk.cath.com.enums.RoleName;
 import nsk.cath.com.enums.Status;
 import nsk.cath.com.errorHandler.NSKException;
 import nsk.cath.com.model.User;
@@ -114,7 +117,15 @@ public class UserService {
     public long countUserByParishId(Long parishId) {
             return userRepo.countByParish(parishId);
     }
+    public User assignRole(UserDetail userDetail , AssignRoleRequest roleRequest) throws NSKException {
+        User operator = userRepo.getOne(userDetail.getUserId());
+        if (operator ==null)
+            throw new NSKException("Please login and try again","404","404");
+        if (!RoleName.SEC.equals(operator.getRole().getName()))
+            throw new NSKException("You are not authorized to assign role to users","401","401");
 
+        return null;
+    }
 //    public long countUserByDeaneryId(Long deaneryId) {
 //            return userRepo.countByDeanery(deaneryId);
 //    }

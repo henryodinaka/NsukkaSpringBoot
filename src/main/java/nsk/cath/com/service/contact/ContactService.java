@@ -48,22 +48,22 @@ public class ContactService {
             throw new NSKException("Please login and try again","401","401");
         Contact contact = new Contact();
         contactRequestValidator.validateContactRequest(request);
-        if (isUpdate) {
+        if (request.isUpdate()) {
             contact = findByUserAndHomeAddress(request.getId(), request.isHomeAddress());
             if (contact == null) {
                 throw new NSKException("The user to be updated is null", "404", "404");
             }
-            contact = generate(contact, null, request, isUpdate,request.isHomeAddress());
+            contact = generate(contact, null, request,request.isHomeAddress());
             contact = contactRepo.save(contact);
             return ResponseEntity.ok(contact);
         } else {
-            contact = generate(contact, user,request, isUpdate,request.isHomeAddress());
+            contact = generate(contact, user,request,request.isHomeAddress());
             contact =contactRepo.save(contact);
             return ResponseEntity.ok(contact);
 
         }
     }
-    public Contact generate( Contact contact,User user,ContactRequest request,boolean isUpdate,boolean isHomeAddress) throws NSKException {
+    public Contact generate( Contact contact,User user,ContactRequest request,boolean isHomeAddress) throws NSKException {
         Lga lga =null;
         if (request.getLgaId() !=null) {
             lga = lgaService.get(request.getLgaId());
@@ -75,7 +75,7 @@ public class ContactService {
         contact.setHouseAddress(request.getHouseAddress());
         contact.setCity(request.getCity());
         contact.setHomeAddress(isHomeAddress);
-       if (!isUpdate)
+       if (!request.isUpdate())
            contact.setUser(user);
 
         return contact;
@@ -87,7 +87,7 @@ public class ContactService {
     }
     public Page<Contact> findByHomeAddress(boolean isHomeAddress,Pageable pageable)
     {
-        return findByHomeAddress(isHomeAddress,pageable);
+        return contactRepo.findByHomeAddress(isHomeAddress,pageable);
     }
     public Page<Contact> findByHouseAddress(String houseAddress, Pageable pageable)
     {

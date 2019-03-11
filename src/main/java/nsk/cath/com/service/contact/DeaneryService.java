@@ -21,6 +21,10 @@ public class DeaneryService {
     {
         return deaneryRepo.findByName(name);
     }
+    public Deanery findOne(Long id)
+    {
+        return deaneryRepo.getOne(id);
+    }
 
     public Deanery findByDeaneryCode(String deaneryCode)
     {
@@ -34,4 +38,5 @@ public class DeaneryService {
     {
         return deaneryRepo.findAllByDiocese(diocese);
     }
+
 }

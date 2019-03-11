@@ -49,7 +49,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 //        , "/bulk/**"
 
-        registry.addInterceptor(interceptorConfig).addPathPatterns("/user/**", "/report/**",
+        registry.addInterceptor(interceptorConfig).addPathPatterns("/assign/**", "/report/**",
                  "/webaudit/**","/logout/**", "/setting/**","/dashboard/**"
                 ,"/password/update-password","/role/activated/roleType/{userType}");
 

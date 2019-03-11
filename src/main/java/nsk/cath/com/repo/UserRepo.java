@@ -51,4 +51,10 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     @Query("select upper(u.email) from User u")
     List<String> getAllEmailAddress();
+
+    @Query("select sum ( case when dn.diocese.id =:dioceseId then 1 else 0 end) as user_count from User u inner join u.parish p inner join p.deanery dn inner join dn.diocese dc")
+    long countByDiocese(@Param("dioceseId") Long dioceseId);
+
+    @Query("select sum ( case when p.deanery.id =:deaneryId then 1 else 0 end) as user_count from User u inner join u.parish p inner join p.deanery dn")
+    long countByDeanery(@Param("deaneryId") Long deaneryId);
 }

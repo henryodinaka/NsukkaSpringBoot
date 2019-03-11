@@ -17,4 +17,5 @@ public class ContactRequest {
     private Long countryId;
     private boolean isHomeAddress;
     private boolean isNigeria;
+    private boolean isUpdate;
 }

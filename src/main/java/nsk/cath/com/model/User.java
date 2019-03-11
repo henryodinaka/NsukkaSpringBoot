@@ -10,6 +10,7 @@ import nsk.cath.com.enums.Gender;
 import nsk.cath.com.enums.Status;
 import nsk.cath.com.enums.Title;
 import nsk.cath.com.model.auth.Role;
+import nsk.cath.com.model.contact.Branch;
 import nsk.cath.com.model.contact.Parish;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -72,4 +73,13 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ParishId", referencedColumnName = "Id")
     private Parish parish;
+
+    @ManyToOne
+    @JoinColumn(name = "UserBranch")
+    private Branch branch;
+
+    public User(Long id, String email) {
+        this.id =id;
+        this.email = email;
+    }
 }
