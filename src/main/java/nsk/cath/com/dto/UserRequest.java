@@ -19,7 +19,8 @@ public class UserRequest {
     private NameRequest nameRequest;
     private Gender gender;
     private String phoneNumber;
-    private ContactRequest contact;
+    private Long branchId;
+    private Long parishId;
     private Date dateOfBirth;
     private Long role;
     private MaritalStatus maritalStatus;

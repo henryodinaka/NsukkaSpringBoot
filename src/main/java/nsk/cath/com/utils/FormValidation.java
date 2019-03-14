@@ -1,6 +1,7 @@
 package nsk.cath.com.utils;
 
 import nsk.cath.com.dto.ContactRequest;
+import nsk.cath.com.dto.UserRequest;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
@@ -16,65 +17,70 @@ public class FormValidation {
 
 
     //validate Demographics here
-    public String validateDemography(String email,String phoneNumber , Date dateOfBirth, String firstName, Object gender, String middleName,String surname, Object title) {
+    public static String validateDemography(UserRequest request) {
 
-        if (!validData(title)) {
+        if (!validData(request.getTitle())) {
             return "title is required";
         }
 
-        if (!validData(surname)) {
+        if (!validData(request.getNameRequest().getLastName())) {
             return "surname is required";
         }
-        if (!validName(surname)) {
+        if (!validName(request.getNameRequest().getLastName())) {
             return "surname is invalid, Name must be between 2 and 255 non-digit characters";
         }
 
-        if (!validData(firstName)) {
+        if (!validData(request.getNameRequest().getFirstName())) {
             return "first name is required";
         }
-        if (!validName(firstName)) {
+        if (!validName(request.getNameRequest().getFirstName())) {
             return "first name is invalid, Name must be between 2 and 255 non-digit characters";
         }
 
-        if (validData(middleName)) {
-            if (!validName(middleName)) {
+        if (validData(request.getNameRequest().getMiddleName())) {
+            if (!validName(request.getNameRequest().getMiddleName())) {
                 return "middle name is invalid, Name must be between 2 and 255 non-digit characters";
             }
         }
 
 
-        if (validData(email)) {
-            if(email.contains(" ")){
+        if (validData(request.getEmail())) {
+            if(request.getEmail().contains(" ")){
                 return "Please ensure you remove all whitespaces in the emailAddress address provided";
             }
 
-            if (!validEmail(email)){
+            if (!validEmail(request.getEmail())){
                 return "Email address is invalid. Please provide a valid emailAddress address";
             }
         }
 
-        if (!validData(phoneNumber)) {
+        if (!validData(request.getPhoneNumber())) {
             return "phoneNumber is required";
         }
-        if (!validPhoneNumber(phoneNumber)) {
+        if (!validPhoneNumber(request.getPhoneNumber())) {
             return "Invalid phoneNumber, Phone number must be between 7 and 15 digit characters";
         }
 
-        if (!validData(dateOfBirth)) {
+        if (!validData(request.getDateOfBirth())) {
             return "date of birth is required";
         }
-        if (!validDateOfBirth(dateOfBirth)) {
+        if (!validDateOfBirth(request.getDateOfBirth())) {
             return "Date of birth is invalid. Age must be between 16 - 150 years";
         }
 
-        if (!validData(gender)) {
+        if (!validData(request.getGender())) {
             return "gender is required";
         }
+        if (!validData(request.getBranchId()))
+            return "Invalid Branch provide";
+
+        if (!validData(request.getParishId()))
+            return "Invalid Parish provide";
 
         return null;
     }
 
-    public String validateContactDetails(ContactRequest request) {
+    public static String validateContactDetails(ContactRequest request) {
         String address;
         String stateOf;
         if (request.isHomeAddress())
@@ -87,22 +93,21 @@ public class FormValidation {
             address ="residential";
             stateOf ="residence";
         }
-        if (!validData(request.getHouseAddress())) {
+        if (!validData(request.getHouseAddress()))
             return address+" address is required";
-        }
-        if (!validLength(request.getHouseAddress(), 20, 255)) {
+
+        if (!validLength(request.getHouseAddress(), 20, 255))
             return "Invalid "+address+" Address, "+address+" Address must be between 20 and 255 characters";
-        }
 
         if (request.isNigeria()) {
-            if (!validData(request.getStateId())) {
-                return "state Of "+stateOf+" is required";
-            }
             if (!validData(request.getLgaId())) {
                 return "local government area Of  "+stateOf+"  is required";
             }
         }
-
+        if (!validLength(request.getHouseAddress(),5,50))
+            return "Address must be between 5 and 50 characters";
+        if (!validLength(request.getCity(),3,20))
+            return "City must be between 3 and 20";
         return null;
     }
 
@@ -139,7 +144,7 @@ public class FormValidation {
 //        JOptionPane.showMessageDialog(null,message,"Validation Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public boolean validData(Object object) {
+    public static boolean validData(Object object) {
 
         if (object == null || String.valueOf(object).isEmpty()) {
             return false;
@@ -161,7 +166,7 @@ public class FormValidation {
         return false;
     }
 
-    public boolean validPhoneNumber(String phoneNumber) {
+    public  static boolean validPhoneNumber(String phoneNumber) {
 
         if (phoneNumber.matches("^\\d{7,15}$")) {
             return true;
@@ -174,7 +179,7 @@ public class FormValidation {
         return false;
     }
 
-    public boolean validName(String name) {
+    public  static boolean validName(String name) {
 
         if (name.length() < 2) {
             return false;
@@ -192,7 +197,7 @@ public class FormValidation {
         return true;
     }
 
-    public boolean validNumber(String numbers) {
+    public static  boolean validNumber(String numbers) {
 
         //pure number
         if (!(Pattern.compile("[0-9]+").matcher(numbers).matches())) {
@@ -202,7 +207,7 @@ public class FormValidation {
         return true;
     }
 
-    public boolean validLength(String string, int min, int max) {
+    public static  boolean validLength(String string, int min, int max) {
 
         if (string.length() < min) {
             return false;
@@ -217,7 +222,7 @@ public class FormValidation {
         return true;
     }
 
-    public boolean validLength(String string, int digits) {
+    public  static boolean validLength(String string, int digits) {
 
         if (string.length() < digits) {
             return false;
@@ -231,7 +236,7 @@ public class FormValidation {
         return true;
     }
 
-    public boolean validDateOfBirth(Date dob) {
+    public static  boolean validDateOfBirth(Date dob) {
 
         Date today = new Date();
 
@@ -255,7 +260,7 @@ public class FormValidation {
         return true;
     }
 
-    public boolean validEmail(String emailAddress) {
+    public static  boolean validEmail(String emailAddress) {
 
         if (emailAddress.contains("^")) {
             return false;

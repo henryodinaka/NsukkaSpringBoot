@@ -32,23 +32,21 @@ public class UserController {
     public ResponseEntity<?> create(@RequestBody UserRequest userRequest,@RequestParam boolean isInNIgeria)
     {
         try {
-            userService.setup(userRequest,isInNIgeria,false);
+            return userService.setup(userRequest,isInNIgeria,false);
         } catch (NSKException e) {
             log.error("NSKEscption caught ",e);
-            ErrorDetails.setUpErrors("User creation failed", Arrays.asList(e.getMessage()),e.getCode());
+            return ErrorDetails.setUpErrors("User creation failed", Arrays.asList(e.getMessage()),e.getCode());
         }
-        return ResponseEntity.status(200).body("");
     }
     @PutMapping
     public ResponseEntity<?> update(@RequestBody UserRequest userRequest,@RequestParam boolean isInNIgeria)
     {
         try {
-            userService.setup(userRequest,isInNIgeria,true);
+           return userService.setup(userRequest,isInNIgeria,true);
         } catch (NSKException e) {
             log.error("NSKEscption caught ",e);
-            ErrorDetails.setUpErrors("User creation failed", Arrays.asList(e.getMessage()),e.getCode());
+           return ErrorDetails.setUpErrors("User creation failed", Arrays.asList(e.getMessage()),e.getCode());
         }
-        return ResponseEntity.status(200).body("");
     }
     @PutMapping("/assign")
     public ResponseEntity<?>assignRole(@RequestBody AssignRoleRequest roleRequest, @ApiIgnore @RequestAttribute(Constants.USER_DETAIL)UserDetail userDetail)

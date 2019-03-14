@@ -10,12 +10,17 @@ import nsk.cath.com.enums.Status;
 import nsk.cath.com.errorHandler.NSKException;
 import nsk.cath.com.model.User;
 import nsk.cath.com.model.auth.Role;
+import nsk.cath.com.model.contact.Branch;
 import nsk.cath.com.model.contact.Contact;
 import nsk.cath.com.model.contact.Lga;
+import nsk.cath.com.model.contact.Parish;
 import nsk.cath.com.repo.UserRepo;
 import nsk.cath.com.repo.contact.ContactRepo;
 import nsk.cath.com.service.auth.RoleService;
+import nsk.cath.com.service.contact.BranchService;
 import nsk.cath.com.service.contact.LgaService;
+import nsk.cath.com.service.contact.ParishService;
+import nsk.cath.com.utils.FormValidation;
 import nsk.cath.com.utils.Validator;
 import nsk.cath.com.utils.encryption.EncyptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +39,13 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
     @Autowired
-    private ContactRepo contactRepo;
-    @Autowired
     private RoleService roleService;
     @Autowired
-    private Validator<UserRequest> userRequestValidator;
+    private BranchService branchService;
     @Autowired
-    private LgaService lgaService;
+    private ParishService parishService;
+    @Autowired
+    private Validator<UserRequest> userRequestValidator;
 
     public User save(User user)
     {
@@ -50,19 +55,34 @@ public class UserService {
         userRequestValidator.validateUserRequest(request,isNigeria,isUpdate);
 
         User user = new User();
+        String validate = FormValidation.validateDemography(request);
+        if (validate !=null)
+        {
+            throw new NSKException(validate, "400", "400");
+        }
 
+        Role newUserRole = roleService.getById(request.getRole());
+        if (newUserRole ==null)throw new NSKException(Errors.UNKNOWN_ROLE_ID.getValue().replace("{}",String.valueOf(request.getRole())),"404","404");
+
+        Parish parish = parishService.findById(request.getParishId());
+        if (parish ==null)
+            throw new NSKException("Invalid parish selected","400","400");
+
+        Branch branch = branchService.getOne(request.getBranchId());
+        if (branch ==null)
+            throw new NSKException("Invalid branch selected","400","400");
         if (isUpdate) {
              user = findById(request.getId());
             if (user == null) {
                 throw new NSKException("The user to be updated is null", "404", "404");
             }
-            user = generate(user, request, isUpdate);
+            user = generate(user, request,newUserRole,branch,parish);
             user = save(user);
 //            //send a mail to all the authorizers for awareness
 //            sendAwarenessMail(existingUser, null, isUpdate, fromEmail);
             return ResponseEntity.ok(user);
         } else {
-            user = generate(user,request, isUpdate);
+            user = generate(user,request,newUserRole,branch,parish);
             user = save(user);
 
 //            //send a mail to all the authorizers for awareness
@@ -71,7 +91,7 @@ public class UserService {
             return ResponseEntity.ok(user);
         }
     }
-    public User generate( User user,UserRequest request,boolean isUpdate) throws NSKException {
+    public User generate( User user,UserRequest request, Role newUserRole,Branch branch,Parish parish) throws NSKException {
         user.setDateOfBirth(request.getDateOfBirth());
         user.setEmail(request.getEmail());
         user.setGender(request.getGender());
@@ -80,10 +100,10 @@ public class UserService {
         user.setPhoneNumber(request.getPhoneNumber());
         user.setStatus(Status.INACTIVE);
         user.setTitle(request.getTitle());
-        Role newUserRole = roleService.getById(request.getRole());
-        if (newUserRole !=null)
-            user.setRole(newUserRole);
-        else throw new NSKException(Errors.UNKNOWN_ROLE_ID.getValue().replace("{}",String.valueOf(request.getRole())),"404","404");
+        user.setRole(newUserRole);
+        user.setParish(parish);
+        user.setBranch(branch);
+
        return user;
     }
     public User findById (Long id)
@@ -142,17 +162,17 @@ public class UserService {
 //        return userRepo.getUsersByUserType(roleName, userType, activated);
 //    }
 
-    public Contact getContactDetails(UserRequest userReq) {
-        Contact contact = new Contact();
-        Lga lga = null;
-        if (userReq.getContact().getLgaId() !=null && userReq.getContact().getLgaId() !=0)
-        {
-            lga= this.lgaService.get(userReq.getContact().getLgaId());
-            contact.setLga(Optional.ofNullable(lga).orElse(null));
-        }
-        contact.setHouseAddress(Optional.ofNullable(userReq.getContact().getHouseAddress()).orElse(null));
-        contact.setCity(Optional.ofNullable(userReq.getContact().getCity()).orElse(null));
-        contact.setHomeAddress(userReq.getContact().isHomeAddress());
-        return contact;
-    }
+//    public Contact getContactDetails(UserRequest userReq) {
+//        Contact contact = new Contact();
+//        Lga lga = null;
+//        if (userReq.getContact().getLgaId() !=null && userReq.getContact().getLgaId() !=0)
+//        {
+//            lga= this.lgaService.get(userReq.getContact().getLgaId());
+//            contact.setLga(Optional.ofNullable(lga).orElse(null));
+//        }
+//        contact.setHouseAddress(Optional.ofNullable(userReq.getContact().getHouseAddress()).orElse(null));
+//        contact.setCity(Optional.ofNullable(userReq.getContact().getCity()).orElse(null));
+//        contact.setHomeAddress(userReq.getContact().isHomeAddress());
+//        return contact;
+//    }
 }

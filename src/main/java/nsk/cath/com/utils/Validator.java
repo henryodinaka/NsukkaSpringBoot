@@ -63,7 +63,7 @@ public class Validator<T> {
 //            return new EmandateResponse(EmandateResponseCode.INVALID_REQUEST.getCode(),null,errors.toString());
 //    }
 
-    public ErrorDetails validateUserRequest(T  req, boolean isNigeria, boolean isUpdate) throws NSKException {
+    public void validateUserRequest(T  req, boolean isNigeria, boolean isUpdate) throws NSKException {
         Optional<String> e1 =null;
         Optional<String> e2 =null;
         Optional<String> e3;
@@ -71,7 +71,7 @@ public class Validator<T> {
         if (req instanceof UserRequest)
         {
             UserRequest request  = ((UserRequest) req);
-            e1 = Optional.ofNullable(formValidation.validateDemography(request.getEmail(),request.getPhoneNumber(),request.getDateOfBirth(),request.getNameRequest().getFirstName(),request.getGender(),request.getNameRequest().getMiddleName(),request.getNameRequest().getLastName(),request.getTitle()));
+            e1 = Optional.ofNullable(formValidation.validateDemography(request));
             validate(request, isUpdate, request.getId());
         }
 //            e3 = Optional.ofNullable(formValidation.validateRate(request.isFixedAmountMandate(), request.getAmount(), request.getFrequency(),request.getNarration(), request.getProductId()));
@@ -102,12 +102,11 @@ public class Validator<T> {
 //            errors.add(e4.get());
 //        }
         if (errors.isEmpty())
-            return null;
-        else
-            return new ErrorDetails(new Date(),"Validation failed",errors.toString());
+            throw new NSKException(errors.toString(),"400","400");
+
     }
 
-    public ErrorDetails validateContactRequest(ContactRequest contactRequest) {
+    public void validateContactRequest(ContactRequest contactRequest) throws NSKException {
         Optional<String> e2;
         e2 = Optional.ofNullable(formValidation.validateContactDetails(contactRequest));
         List<String> errors = new ArrayList<>();
@@ -115,9 +114,8 @@ public class Validator<T> {
             errors.add(e2.get());
         }
         if (errors.isEmpty())
-            return null;
-        else
-            return new ErrorDetails(new Date(),"Validation failed",errors.toString());
+
+            throw new NSKException(errors.toString(),"400","400");
     }
 
     public void validate(UserRequest request, boolean isUpdate, Long id) throws NSKException {

@@ -6,6 +6,7 @@ public enum RoleName {
     FIN_SEC("Financial Secretary"),
     PRO("Pro"),
     TREASURER("Treasure"),
+    USER("User"),
     //unknown should never be used. This is only returned if on
     //if the find method below does not return a value
     UNKNOWN("Unknown");
