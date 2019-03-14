@@ -101,7 +101,7 @@ public class Validator<T> {
 //        if (e4.isPresent()) {
 //            errors.add(e4.get());
 //        }
-        if (errors.isEmpty())
+        if (!errors.isEmpty())
             throw new NSKException(errors.toString(),"400","400");
 
     }
